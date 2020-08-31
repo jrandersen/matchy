@@ -51,7 +51,7 @@ if (Math.random() < alien[0].accuracy) {
 <br>
 <hr>
 
-![Imgur](https://i.imgur.com/ovUbCxLl.png)
+![Imgur](https://i.imgur.com/ovUbCxLm.png)
 
 <br>
 <hr>
