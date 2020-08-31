@@ -41,17 +41,17 @@ if (Math.random() < alien[0].accuracy) {
 ```
 
 ### Image Example
-![Imgur](https://i.imgur.com/aUoVkFHm.png)
+![Imgur](https://i.imgur.com/EnU0q3ll.png)
 
 <br>
 <hr>
 
-![Imgur](https://i.imgur.com/Ix6Bbgum.png)
+![Imgur](https://i.imgur.com/UXl2NKel.png)
 
 <br>
 <hr>
 
-![Imgur](https://i.imgur.com/nLUWWS2m.png)
+![Imgur](https://i.imgur.com/VOQnBC7l.png)
 
 <br>
 <hr>
