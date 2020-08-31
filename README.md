@@ -132,4 +132,4 @@ Creator: Jason Andersen <br>
 
 
 ###  WALK THROUGH 
-! [Giphy](https://giphy.com/gifs/eg8yq2rS3L3lp3fGqX/html5)
+![Giphy](https://giphy.com/gifs/eg8yq2rS3L3lp3fGqX/html5)
