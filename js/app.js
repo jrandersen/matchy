@@ -1,4 +1,4 @@
 /**
- * Fisrst game
+ * First game
  */
 console.log('==== GAME START ====')
