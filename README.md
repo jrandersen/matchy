@@ -41,7 +41,9 @@ if (Math.random() < alien[0].accuracy) {
 ```
 
 ### Image Example
-![llama](https://i.imgur.com/FPWDJDK.gifv)
-
+[Imgur](https://i.imgur.com/xZm4vVqm.png)
+<br>
+<hr>
+[Imgur](https://i.imgur.com/xZm4vVqm.png)
 <br>
 <hr>
