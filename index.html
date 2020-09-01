@@ -3,18 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="js/app.js"></script>
+    <script src="js/app.js" defer></script>
     <link rel="stylesheet" href="css/main.css">
     <title>Matchy McMatchface</title>
 </head>
-<body>
+<body class= 'light'>
     <div class='container'>
         <button id='end__game'>End Game</button>
         <button id='info'>Info</button>
-        <div class='tile__one'>one</div>
-        <div class='tile__two'>two</div>
-        <div class='tile__three'>three</div>
-        <div class='tile__four'>four</div>
+        <div class='card__one'>
+            <div class=card__flip>
+                <div class= 'card__front'>front</div>
+                <div class= 'card__back'>back</div>
+            </div>
+        </div>
+        <div class='card__two'>two</div>
+        <div class='card__three'>three</div>
+        <div class='card__four'>four</div>
         
         <nav id='side__nav'>
             <div id='score'>score</div>
