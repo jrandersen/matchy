@@ -164,52 +164,6 @@ console.log(newBoard);
 
 
 /**
- * HELPER FUNCTION FOR Mutation observer
- * @param {ARRAY} mutationsList 
- * @param {Object} observer 
- */
-function callback(mutationsList, observer) {
-    console.log("Mutations:", mutationsList);
-    console.log("Observer:", observer);
-    
-    mutationsList.forEach(mutation => {
-        if(mutation.attributeName === 'class') {
-            alert(`changes!`)
-        }else {
-            console.log(`somthing wrong with mutations observer`)
-        }
-    })
-}
-const mutationObserver = new MutationObserver(callback);
-const $container = $('#container')
-// console.log(($container)[0])
-// mutationObserver.observe($container[0], {attributes: true})
-
-/**
- * HELPER FUNCTION FOR CLASS LISTENER
- * @param {elemId} this is a dom element
- * @param {callback} does a function
- */
-// function addClassNameListner (elemId, callback){
-//     const elem = document.getElementsByClassName(elemId)[0];
-//     const lastClassName = elem.className;
-//     window.setInterval( function() {
-//         const className = elem.className;
-//         if (className !== lastClassName) {
-//             callback();
-//            // lastClassName = className;
-//         }else {
-//             console.log(`className the same!`)
-//         }
-//     }, 10);
-// }
-// const bob = document.getElementsByClassName('card__one bobloblaw')[0]
-// console.log(bob)
-// addClassNameListner('card__one', function(){ alert(`changes!!`)
-// });
-
-
-/**
  * The Game Play!!
  * @method gamePlay() - This listens for updates to teh classList of '.flip' the looks for match. If not match it removes '.flip'. If match it adds '.matched' and removes '.flip'
  */
@@ -224,21 +178,18 @@ class Game {
             if (idOne === idTwo){
                 console.log(`${idOne}, ${idTwo} it is a match`)
                 this.match.push(arr[0], arr[1])
-                idList = [];  // resret list to  empty
-                console.log(this.match.length)
-                console.log(newBoard.number)
-                if (this.match.length === newBoard.number) {
-                    console.log('Game Reset')
-                    $('div').removeClass('flip')
-                    this.match =[]; // <=- there a better way to do this?// 
-                    $('div').addClass('matched'); // need just the two divs being compared... this is all div
-                }else {
-                    console.log(`not reset`)
-                } 
+                idList = [];  // <== Reset idList to empty keep here!
+                const temp = this;
+                window.setTimeout( function(){
+                    temp.gameReset(); // <== call game reset 
+                },1200)
             }else if (idOne!==idTwo) {
                 console.log(`it is not a match`);
-                $('div').removeClass('flip') // <= can I set a slight timer on this? 
                 idList = [];
+                const temp = this;
+                window.setTimeout( function(){
+                    $('div').removeClass('flip') // <= can I set a slight timer on this? 
+                },400)
             }else if (idList.length >=3){
                 idList = []
             }else {
@@ -246,17 +197,15 @@ class Game {
             }
             idOne = -1;
             idTwo = -1;
-            // newBoard.gameReset();
             break  /// <== I seem to need this ??
         }
-        // console.log(`First select`)
     }
     gameReset() {
         if (this.match.length === newBoard.number) {
             console.log('Game Reset')
             $('div').removeClass('flip')
             this.match =[]; // <=- there a better way to do this?// 
-            $('div').addClass('matched'); // need just the two divs being compared... this is all div
+            // $('div').addClass('matched'); // need just the two divs being compared... this is all div
         }else {
             console.log(`not reset`)
         } 
@@ -307,3 +256,72 @@ card__four.addEventListener('click', function() {
     idList.push(card__four.id);
     newGame.gamePLay(idList);
 });
+
+
+//  CONTAINER LISTNER DELEGATION
+const containerListner = document.querySelector('.container');
+containerListner.addEventListener('click', containerAction, false);
+
+function containerAction(e) {
+    if (e.target !== e.currentTarget) {
+        const selectedCard = e.target.id;
+        if (selectedCard === ('card')) {
+            alert(`hello`)
+        }
+    }
+    e.stopPropagation();
+}
+
+
+
+/**
+ *  MODAL WINDOW  AND NAV LISTNERS
+ */
+// CLOSE MODAL NO DECISION TOP 'X'
+const modal__Bg = document.querySelector('.modal__bg'); // <== grab modal container/// INFO BUTTON
+const modal__close = document.querySelector('.modal__close')
+modal__close.addEventListener('click', function (e) {
+    modal__Bg.classList.remove('bg__active');
+    e.stopPropagation();
+});
+
+//  MODAL LISTNER DELEGATION
+const modalListner = document.querySelector('.modal__bg');
+modalListner.addEventListener('click', modalAction, false);
+
+function modalAction(e) {
+    if (e.target !== e.currentTarget) {
+        const clickedItem = e.target.id;
+        // alert("hello" + clickedItem)
+        if (clickedItem === ('modal__start')) {
+            alert('start')
+        }else if (clickedItem === ('modal__end')) {
+            alert('end')
+        }else if (clickedItem === ('modal__close')) {
+            console.log('close')
+            const modal__Bg = document.querySelector('.modal__bg'); // <== grab modal container
+            modal__Bg.classList.remove('bg__active');
+        }
+    }
+    e.stopPropagation();
+}
+
+//  'NAV' LISTNER DELEGATION
+const navListner = document.querySelector('.container');
+navListner.addEventListener('click', navAction, false);
+
+function navAction(e) {
+    if (e.target !== e.currentTarget) {
+        const selectedItem = e.target.id;
+        // alert(`hello,${selectedItem}`)
+        if (selectedItem === ('info')) {
+            const modalMsg =document.querySelector('h4');// <== grab h4 for msg
+            const modal__Bg = document.querySelector('.modal__bg'); // <== grab modal container
+            modal__Bg.classList.add('bg__active');  // <== set modal container to 'active'
+            modalMsg.textContent = ('This game based off Memory and was made during General Assemlby SEI course in Aug 2020 by Jason Andersen!')
+        }else if (selectedItem === ('end')) {
+            alert ( `Helllooo there!`);
+        }
+    }
+    e.stopPropagation();
+}
