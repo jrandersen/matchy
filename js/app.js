@@ -164,6 +164,55 @@ console.log(newBoard);
 
 
 /**
+ * HELPER FUNCTION FOR Mutation observer
+ * @param {ARRAY} mutationsList 
+ * @param {Object} observer 
+ */
+function callback(mutationsList, observer) {
+    console.log("Mutations:", mutationsList);
+    console.log("Observer:", observer);
+    
+    mutationsList.forEach(mutation => {
+        if(mutation.attributeName === 'class') {
+            console.warn(`changes!`)
+        }else {
+            console.log(`somthing wrong with mutations observer`)
+        }
+    })
+}
+const mutationObserver = new MutationObserver(callback);
+
+const $container = $('#container')
+// console.log(($container)[0])
+mutationObserver.observe($container[0], {attributes: true})
+
+
+
+
+/**
+ * HELPER FUNCTION FOR CLASS LISTENER
+ * 
+ */
+function addClassNameListner (elemId, callback){
+    const elem = document.getElementsByClassName(elemId)[0];
+    const lastClassName = elem.className;
+    window.setInterval( function() {
+        const className = elem.className;
+        if (className !== lastClassName) {
+            callback();
+           // lastClassName = className;
+        }else {
+            console.log(`className the same!`)
+        }
+    }, 10);
+}
+const bob = document.getElementsByClassName('card__one bobloblaw')[0]
+console.log(bob)
+// addClassNameListner('card__one', function(){ alert(`changes!!`)
+// });
+
+
+/**
  * The Game Play!!
  * @method gamePlay() - This listens for updates to teh classList of '.flip' the looks for match. If not match it removes '.flip'. If match it adds '.matched' and removes '.flip'
  */
@@ -171,28 +220,30 @@ class Game {
     constructor(){
         // this.domCardArr = document.querySelector('.flip')
     }
-    gamePLay() {
-        const $flipArr = $('.bobloblaw')
-        while ($flipArr.length === 2) {
+    gamePLay(arr) {
+        // const $flipArr = $('.bobloblaw')
+        while (arr.length === 2) {
             console.log(` We have 'potential match' match! `)
-            let idOne = $flipArr[1].id;
-            let idTwo = $flipArr[0].id;
+            let idOne = arr[1];
+            let idTwo = arr[0];
             console.log(`${idOne}, ${idTwo}`);
             if (idOne === idTwo){
                 console.log(`${idOne}, ${idTwo} it is a match`)
+                
             }else {
-                console.log(`it is not a match`)
+                console.log(`it is not a match`);
+                $('div').removeClass('flip')
             }
             idOne = -1;
             idTwo = -1;
             return
         }
-        console.log(`nope`)
-        console.log($flipArr)
-        
+        // idList = 0;
+        console.log(`First select`)
+        // console.log(arr)
     }
 }
-// const newGame = new Game();
+const newGame = new Game();
 // newGame.gamePLay();
 
 
@@ -203,26 +254,37 @@ class Game {
 /**
  * CARD FLIP LISTNER
  */
+
+const idList = []
 const card__one = document.getElementsByClassName('card__one')[0];
 // console.log(card__one);
 card__one.addEventListener('click', function() {
     card__one.classList.toggle('flip');
+    idList.push(card__one.id);
+    newGame.gamePLay(idList);
 });
 
 const card__two = document.getElementsByClassName('card__two')[0];
 // console.log(card__one);
 card__two.addEventListener('click', function() {
     card__two.classList.toggle('flip');
+    idList.push(card__two.id);
+    newGame.gamePLay(idList);
 });
 
 const card__three = document.getElementsByClassName('card__three')[0];
 // console.log(card__three);
 card__three.addEventListener('click', function() {
     card__three.classList.toggle('flip');
+    idList.push(card__three.id);
+    newGame.gamePLay(idList);
 });
 
 const card__four = document.getElementsByClassName('card__four')[0];
 // console.log(card__four);
 card__four.addEventListener('click', function() {
     card__four.classList.toggle('flip');
+    idList.push(card__four.id);
+    newGame.gamePLay(idList);
 });
+console.log(idList);
