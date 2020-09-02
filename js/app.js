@@ -142,9 +142,9 @@ class Board {
             // console.log(genCardArr);
         }
         // janky but it works for now..., no mattter teh length of array this get how many cards the user wants
-        console.log(this.cards.length)
+        // console.log(this.cards.length)
         let newArrlength = this.cards.length - this.number;
-        console.log(typeof newArrlength, newArrlength);
+        // console.log(typeof newArrlength, newArrlength);
         this.cards.splice(0, newArrlength)
     }
     dealBoard() {
@@ -158,7 +158,7 @@ class Board {
 
 const newBoard = new Board(4); // <== Invoke generate Board hardcoded at 4 for now 
 const random__array = randomiseArray(cardDeck) // <== shuffle the main cardDeck array
-console.log(random__array) 
+// console.log(random__array) 
 newBoard.generateBoard(random__array); // <== generate board (cards randomized and id assined in pairs)
 console.log(newBoard);
 
@@ -181,17 +181,14 @@ function callback(mutationsList, observer) {
     })
 }
 const mutationObserver = new MutationObserver(callback);
-
 const $container = $('#container')
 // console.log(($container)[0])
 // mutationObserver.observe($container[0], {attributes: true})
 
-
-
-
 /**
  * HELPER FUNCTION FOR CLASS LISTENER
- * 
+ * @param {elemId} this is a dom element
+ * @param {callback} does a function
  */
 // function addClassNameListner (elemId, callback){
 //     const elem = document.getElementsByClassName(elemId)[0];
@@ -218,35 +215,54 @@ const $container = $('#container')
  */
 class Game {
     constructor(){
-        // this.domCardArr = document.querySelector('.flip')
+        this.match =[];
     }
     gamePLay(arr) {
-        // const $flipArr = $('.bobloblaw')
         while (arr.length === 2) {
             let idOne = arr[1];
             let idTwo = arr[0];
             if (idOne === idTwo){
                 console.log(`${idOne}, ${idTwo} it is a match`)
-                idList = [];
-                // $('div').addClass('matched'); // need jsut teh two div being compared
+                this.match.push(arr[0], arr[1])
+                idList = [];  // resret list to  empty
+                console.log(this.match.length)
+                console.log(newBoard.number)
+                if (this.match.length === newBoard.number) {
+                    console.log('Game Reset')
+                    $('div').removeClass('flip')
+                    this.match =[]; // <=- there a better way to do this?// 
+                    $('div').addClass('matched'); // need just the two divs being compared... this is all div
+                }else {
+                    console.log(`not reset`)
+                } 
             }else if (idOne!==idTwo) {
                 console.log(`it is not a match`);
-                $('div').removeClass('flip')
+                $('div').removeClass('flip') // <= can I set a slight timer on this? 
                 idList = [];
             }else if (idList.length >=3){
                 idList = []
             }else {
-                console.log('no conditions met')
-                
+                console,log(`something wrong`)
             }
             idOne = -1;
             idTwo = -1;
-            return
+            // newBoard.gameReset();
+            break  /// <== I seem to need this ??
         }
-        console.log(`First select`)
-        // console.log(arr)
+        // console.log(`First select`)
+    }
+    gameReset() {
+        if (this.match.length === newBoard.number) {
+            console.log('Game Reset')
+            $('div').removeClass('flip')
+            this.match =[]; // <=- there a better way to do this?// 
+            $('div').addClass('matched'); // need just the two divs being compared... this is all div
+        }else {
+            console.log(`not reset`)
+        } 
     }
 }
+
 const newGame = new Game();
 // newGame.gamePLay();
 
@@ -291,4 +307,3 @@ card__four.addEventListener('click', function() {
     idList.push(card__four.id);
     newGame.gamePLay(idList);
 });
-console.log(idList);
