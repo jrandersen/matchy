@@ -174,7 +174,7 @@ function callback(mutationsList, observer) {
     
     mutationsList.forEach(mutation => {
         if(mutation.attributeName === 'class') {
-            console.warn(`changes!`)
+            alert(`changes!`)
         }else {
             console.log(`somthing wrong with mutations observer`)
         }
@@ -184,7 +184,7 @@ const mutationObserver = new MutationObserver(callback);
 
 const $container = $('#container')
 // console.log(($container)[0])
-mutationObserver.observe($container[0], {attributes: true})
+// mutationObserver.observe($container[0], {attributes: true})
 
 
 
@@ -193,21 +193,21 @@ mutationObserver.observe($container[0], {attributes: true})
  * HELPER FUNCTION FOR CLASS LISTENER
  * 
  */
-function addClassNameListner (elemId, callback){
-    const elem = document.getElementsByClassName(elemId)[0];
-    const lastClassName = elem.className;
-    window.setInterval( function() {
-        const className = elem.className;
-        if (className !== lastClassName) {
-            callback();
-           // lastClassName = className;
-        }else {
-            console.log(`className the same!`)
-        }
-    }, 10);
-}
-const bob = document.getElementsByClassName('card__one bobloblaw')[0]
-console.log(bob)
+// function addClassNameListner (elemId, callback){
+//     const elem = document.getElementsByClassName(elemId)[0];
+//     const lastClassName = elem.className;
+//     window.setInterval( function() {
+//         const className = elem.className;
+//         if (className !== lastClassName) {
+//             callback();
+//            // lastClassName = className;
+//         }else {
+//             console.log(`className the same!`)
+//         }
+//     }, 10);
+// }
+// const bob = document.getElementsByClassName('card__one bobloblaw')[0]
+// console.log(bob)
 // addClassNameListner('card__one', function(){ alert(`changes!!`)
 // });
 
@@ -223,22 +223,26 @@ class Game {
     gamePLay(arr) {
         // const $flipArr = $('.bobloblaw')
         while (arr.length === 2) {
-            console.log(` We have 'potential match' match! `)
             let idOne = arr[1];
             let idTwo = arr[0];
-            console.log(`${idOne}, ${idTwo}`);
             if (idOne === idTwo){
                 console.log(`${idOne}, ${idTwo} it is a match`)
-                
-            }else {
+                idList = [];
+                // $('div').addClass('matched'); // need jsut teh two div being compared
+            }else if (idOne!==idTwo) {
                 console.log(`it is not a match`);
                 $('div').removeClass('flip')
+                idList = [];
+            }else if (idList.length >=3){
+                idList = []
+            }else {
+                console.log('no conditions met')
+                
             }
             idOne = -1;
             idTwo = -1;
             return
         }
-        // idList = 0;
         console.log(`First select`)
         // console.log(arr)
     }
@@ -255,7 +259,7 @@ const newGame = new Game();
  * CARD FLIP LISTNER
  */
 
-const idList = []
+let idList = []
 const card__one = document.getElementsByClassName('card__one')[0];
 // console.log(card__one);
 card__one.addEventListener('click', function() {
