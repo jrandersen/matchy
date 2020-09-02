@@ -9,17 +9,17 @@ Creator: Jason Andersen <br>
 
 # Matchy
 
-``` javascript
+
 // SECTION 02 The Pitch
 /// The game Matchy is based on memory card game but is able ot keep track or you score IN addtion it has will ahve the ability to be used by kids and adult by the number of cards chosen. In smaller grids you are matching shapes and numbers. but in the larger grids the users are presented with more complex shapes and even faces (not sure how ot do this?) It is a race against time.
-```
+
 
 <br>
 <hr>
 
 ## User Story
 
-```javascript
+
 // SECTION 01 - THE MATCHING GAME: Osoro  - [おそろ]
 
 // to start the game the user selects START GAME.  
@@ -53,7 +53,10 @@ Creator: Jason Andersen <br>
 // [icebox] - keep scores after refresh
 // [icebox] - allow for saving multiple peoples score to come back to improve (no security, just names)
 // [icebox] - show all high scores of all players
-```
+
+<br>
+<hr>
+
 
 ### Potential issues? 
 
