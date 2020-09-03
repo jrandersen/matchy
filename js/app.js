@@ -1,39 +1,42 @@
 /**
  * First game
  */
-console.log('==== GAME START ====')
 const cardDeck = [
     {
         shapeName: 'Circle',
-        shapeImg: 'circle',
+        shapeImg:  'fas fa-circle',
     },
     {
         shapeName: 'Square',
-        shapeImg: 'square',
+        shapeImg: 'fas fa-square',
     },
     {
-        shapeName: 'Triangle',
-        shapeImg: 'triangle',
+        shapeName: 'Marker',
+        shapeImg: "fas fa-map-marker",
     },
     {
-        shapeName: 'Hexagon',
-        shapeImg: 'hexagon',
+        shapeName: 'Minus-circle',
+        shapeImg: "fas fa-minus-circle",
     },
     {
-        shapeName: 'Pentagon',
-        shapeImg: 'pentagon',
+        shapeName: 'Star',
+        shapeImg: "fas fa-star",
     },
     {
-        shapeName: 'Rectangle',
-        shapeImg: 'rectangle',
+        shapeName: 'Heart',
+        shapeImg: "fas fa-heart",
     },
     {
-        shapeName: 'Rhombus',
-        shapeImg: 'rhombus',
+        shapeName: 'Comment',
+        shapeImg: "fas fa-comment",
     },
     {
-        shapeName: 'Parallelogram',
-        shapeImg: 'parallelogram',
+        shapeName: 'Plus-square',
+        shapeImg: "fas fa-plus-square",
+    },
+    {
+        shapeName: 'Cloud',
+        shapeImg: "fas fa-cloud",
     },
 ]
 
@@ -70,6 +73,8 @@ const cardDeck = [
 /// for today board layout with function using jquey to greate all divs, 
 // and anothef function applying all the styling, 
 // then lastly a function to assign the card (which card it is form the deck)
+
+let matchForDOM = 0;
 
  /**
   * GET RANDOM NUMBER HELPER FUNCTION
@@ -132,6 +137,7 @@ class Board {
         this.cards = [];
     }
     generateBoard(cardArr) {
+        const ranArray = randomiseArray(cardArr);
         for (let i = 0; i < cardArr.length; i++) {
             const ran =getRandomNumber()
             const genCardArr = new Card(cardArr[i].shapeName, cardArr[i].shapeImg, cardArr[i].identity) // generate cards from array
@@ -144,13 +150,23 @@ class Board {
         // janky but it works for now..., no mattter teh length of array this get how many cards the user wants
         // console.log(this.cards.length)
         let newArrlength = this.cards.length - this.number;
-        // console.log(typeof newArrlength, newArrlength);
         this.cards.splice(0, newArrlength)
+        console.log('==== GAME START ====')
     }
     dealBoard() {
-        // establish html objects for cards
-        // get dom cards and add an id to each
+        // --streatch establish html objects for cards
+        const cardFromDOM = document.getElementsByClassName('card');
+        // console.log(cardFromDOM);
+        for (let i = 0; i < cardFromDOM.length; i++) {
+            cardFromDOM[i].id = this.cards[i].identity 
+        }
+        // cardFromDOM[0].children[0].children[1].children[0]
+        // variable.cards__flip.card__back.i.fas fa-star
+        for (let i = 0; i < cardFromDOM.length; i++) {
+            cardFromDOM[i].children[0].children[1].children[0].className = this.cards[i].shapeImg;
+        } 
     }
+    
     styleBoard() {
         // apply all css styles to above divs for cards
     }
@@ -158,11 +174,11 @@ class Board {
 
 const newBoard = new Board(4); // <== Invoke generate Board hardcoded at 4 for now 
 const random__array = randomiseArray(cardDeck) // <== shuffle the main cardDeck array
-// console.log(random__array) 
 newBoard.generateBoard(random__array); // <== generate board (cards randomized and id assined in pairs)
 console.log(newBoard);
+newBoard.dealBoard();
 
-
+   
 /**
  * The Game Play!!
  * @method gamePlay() - This listens for updates to teh classList of '.flip' the looks for match. If not match it removes '.flip'. If match it adds '.matched' and removes '.flip'
@@ -179,16 +195,22 @@ class Game {
                 console.log(`${idOne}, ${idTwo} it is a match`)
                 this.match.push(arr[0], arr[1])
                 idList = [];  // <== Reset idList to empty keep here!
+                matchForDOM++
+                console.log(matchForDOM);
+                const $match = $('#match')[0]
+                $match.textContent = matchForDOM
                 const temp = this;
+                /// timer for game reset
                 window.setTimeout( function(){
                     temp.gameReset(); // <== call game reset 
-                },1200)
+                },1000)
             }else if (idOne!==idTwo) {
-                console.log(`it is not a match`);
+                console.log(`${idOne}, ${idTwo} it is NOT a match`);
                 idList = [];
                 const temp = this;
+                /// timer for no match
                 window.setTimeout( function(){
-                    $('div').removeClass('flip') // <= can I set a slight timer on this? 
+                    $('div').removeClass('flip') 
                 },400)
             }else if (idList.length >=3){
                 idList = []
@@ -202,20 +224,19 @@ class Game {
     }
     gameReset() {
         if (this.match.length === newBoard.number) {
-            console.log('Game Reset')
+            console.log('===== Game Reset =====')
             $('div').removeClass('flip')
-            this.match =[]; // <=- there a better way to do this?// 
-            // $('div').addClass('matched'); // need just the two divs being compared... this is all div
+            this.match =[]; // <=- there a better way to do this?//
+            // const ranArr = new randomiseArray(cardDeck);
+            // const newBord = generateBoard(ranArr)
+            // newBord.dealBoard();
         }else {
-            console.log(`not reset`)
+            // console.log(`game not reset`)
         } 
     }
 }
 
 const newGame = new Game();
-// newGame.gamePLay();
-
-
 
 
 
@@ -223,45 +244,18 @@ const newGame = new Game();
 /**
  * CARD FLIP LISTNER
  */
-
 let idList = []
-const card__one = document.getElementsByClassName('card__one')[0];
-// console.log(card__one);
-card__one.addEventListener('click', function() {
-    card__one.classList.toggle('flip');
-    idList.push(card__one.id);
+const $card = $('.card')
+$card.on('click', function(e){
+    $(this).toggleClass('flip');
+    idList.push($(this)[0].id);
     newGame.gamePLay(idList);
-});
-
-const card__two = document.getElementsByClassName('card__two')[0];
-// console.log(card__one);
-card__two.addEventListener('click', function() {
-    card__two.classList.toggle('flip');
-    idList.push(card__two.id);
-    newGame.gamePLay(idList);
-});
-
-const card__three = document.getElementsByClassName('card__three')[0];
-// console.log(card__three);
-card__three.addEventListener('click', function() {
-    card__three.classList.toggle('flip');
-    idList.push(card__three.id);
-    newGame.gamePLay(idList);
-});
-
-const card__four = document.getElementsByClassName('card__four')[0];
-// console.log(card__four);
-card__four.addEventListener('click', function() {
-    card__four.classList.toggle('flip');
-    idList.push(card__four.id);
-    newGame.gamePLay(idList);
-});
+}); 
 
 
 //  CONTAINER LISTNER DELEGATION
 const containerListner = document.querySelector('.container');
 containerListner.addEventListener('click', containerAction, false);
-
 function containerAction(e) {
     if (e.target !== e.currentTarget) {
         const selectedCard = e.target.id;
@@ -271,7 +265,6 @@ function containerAction(e) {
     }
     e.stopPropagation();
 }
-
 
 
 /**
@@ -320,7 +313,7 @@ function navAction(e) {
             modal__Bg.classList.add('bg__active');  // <== set modal container to 'active'
             modalMsg.textContent = ('This game based off Memory and was made during General Assemlby SEI course in Aug 2020 by Jason Andersen!')
         }else if (selectedItem === ('end')) {
-            alert ( `Helllooo there!`);
+            location.reload();
         }
     }
     e.stopPropagation();

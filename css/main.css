@@ -14,7 +14,7 @@
     /* app colors */
 
     /* fonts */
-    --base-font: "helvetica", san-serif;
+    --base-font: "Helvetica", san-serif;
 }
 body.light{
     /* colors */
@@ -49,7 +49,7 @@ body{
 */
 .container{
     display: grid;
-    grid-template-columns: 100px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 100px 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 12.5% repeat();
     width: 100%;
     height: 100%;
@@ -96,280 +96,12 @@ button{
     border: 2px solid #434343;
 }
 
-/*========== CARD ONE ==========*/
-.card__one {
-    /* PLACEMENT ONLY */
-    grid-area: 4/4/6/6;
-    overflow: visible !important;
-    /* for flip */
-    -webkit-transform-style: preserve-3d;
-    -moz-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-    /* for bump up when hover */
-    transition: transform ,0.25s ease-in;
-}
-.card__flip_1 {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-.card__one:hover{
-    /* for the flip */
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-  
-    /* for the bump up when hover */
-    transform: scale(1.015);
-    cursor: pointer;
-}
-.card__one.flip, 
-.flip__card{
-    /* for flip  */
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-}
-.card__front_1, .card__back_1 {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    font-size: 2rem;
-    color: var(--text-color);
-    border: 2px solid #f1f1f1;
-    border-radius: 0.5rem;
-    /* flexbox */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /*  for the flip to keep the back hidden */
-    -webkit-backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    backface-visibility: hidden;
-
-}
-.card__front_1 {
-    background: var(--card-color-front);
-    position: absolute;
-}
-.card__back_1 {
-    background-color: var(--card-color-back);
-    position: absolute;
-    /* for flip */
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-}
-
-/*========== CARD TWO ==========*/
-.card__two {
-    grid-area: 4/6/6/8;
-    overflow: visible !important;
-    /* for flip */
-    -webkit-transform-style: preserve-3d;
-    -moz-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-    /* for bump up when hover */
-    transition: transform 0.25s;
-}
-.card__flip_2 {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-.card__two:hover{
-    /* for the flip */
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-  
-    /* for the bump up when hover */
-    transform: scale(1.015);
-    cursor: pointer;
-}
-
-.card__two.flip,
- .flip__card{
-    /* for flip  */
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-}
-
-.card__front_2, .card__back_2 {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    font-size: 2rem;
-    color: var(--text-color);
-    border: 2px solid #f1f1f1;
-    border-radius: 0.5rem;
-    /* flexbox */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /*  for the flip to keep the back hidden */
-    -webkit-backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    backface-visibility: hidden;
-
-}
-.card__front_2 {
-    background: var(--card-color-front);
-    position: absolute;
-}
-.card__back_2 {
-    background-color: var(--card-color-back);
-    position: absolute;
-    /* for flip */
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-
-}
-
-/*========== CARD THREE ==========*/
-.card__three {
-    grid-area: 6/4/8/6;
-    overflow: visible !important;
-    /* for flip */
-    -webkit-transform-style: preserve-3d;
-    -moz-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-    /* for bump up when hover */
-    transition: transform ,0.25s ease-in;
-}
-.card__flip_3 {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-.card__three:hover{
-    /* for the flip */
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-  
-    /* for the bump up when hover */
-    transform: scale(1.015);
-    cursor: pointer;
-}
-.card__three.flip, 
-.flip__card{
-    /* for flip  */
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-}
-.card__front_3, .card__back_3 {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    font-size: 2rem;
-    color: var(--text-color);
-    border: 2px solid #f1f1f1;
-    border-radius: 0.5rem;
-    /* flexbox */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /*  for the flip to keep the back hidden */
-    -webkit-backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    backface-visibility: hidden;
-
-}
-.card__front_3 {
-    background: var(--card-color-front);
-    position: absolute;
-}
-.card__back_3 {
-    background-color: var(--card-color-back);
-    position: absolute;
-    /* for flip */
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-}
-
-/*========== CARD FOUR ==========*/
-.card__four{
-    grid-area: 6/6/8/8;
-    overflow: visible !important;
-    /* for flip */
-    -webkit-transform-style: preserve-3d;
-    -moz-transform-style: preserve-3d;
-    transform-style: preserve-3d;
-    /* for bump up when hover */
-    transition: transform ,0.25s ease-in;
-}
-.card__flip_4 {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-.card__four:hover{
-    /* for the flip */
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-  
-    /* for the bump up when hover */
-    transform: scale(1.015);
-    cursor: pointer;
-}
-.card__four.flip, 
-.flip__card{
-    /* for flip  */
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-}
-.card__front_4, .card__back_4 {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    font-size: 2rem;
-    color: var(--text-color);
-    border: 2px solid #f1f1f1;
-    border-radius: 0.5rem;
-    /* flexbox */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /*  for the flip to keep the back hidden */
-    -webkit-backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    backface-visibility: hidden;
-
-}
-.card__front_4 {
-    background: var(--card-color-front);
-    position: absolute;
-}
-.card__back_4 {
-    background-color: var(--card-color-back);
-    position: absolute;
-    /* for flip */
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
-    transform: rotateY(180deg);
-}
-
-
-/* SCORE AND TIMER */
+/* ==== SCORE AND TIMER ==== */
 #score {
     display: flex;
     justify-content: center;
     position: absolute;
     padding: 10px 30px 0px 30px;
-}
-
-#timer {
-    display: flex;
-    justify-content: center;
-    position: absolute;
-    padding: 350px 30px 0px 30px;
 }
 
 ul {
@@ -380,8 +112,15 @@ ul {
     padding: 25px 30px 0px 30px;
     list-style: none;
     font-size: 12px;
+} 
+
+.timer {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    padding: 350px 30px 0px 30px;
 }
-a {
+#timer {
     display: flex;
     justify-content: center;
     display: inline;
@@ -390,6 +129,134 @@ a {
     list-style: none;
     font-size: 18px;
     font-weight: bold;
+}
+.match {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    padding: 200px 30px 0px 30px;  
+}
+#match {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    padding: 20px 30px 0px 30px;
+    font-size: 18px;
+    font-weight: bold;
+ 
+}
+
+
+
+/*========== ALL CARDS 'FLIP', 'HOVER', 'MATCHED' ==========*/
+.flip {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+.card:hover{
+    /* for the flip */
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+  
+    /* for the bump up when hover */
+    transform: scale(1.015);
+    cursor: pointer;
+}
+.card.flip, 
+.flip__card{
+    /* for flip  */
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+.card__front, .card__back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-size: 2rem;
+    color: var(--text-color);
+    border: 2px solid #f1f1f1;
+    border-radius: 0.5rem;
+    /* flexbox */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*  for the flip to keep the back hidden */
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+
+}
+.card__front {
+    background: var(--card-color-front);
+    position: absolute;
+}
+.card__back {
+    background-color: var(--card-color-back);
+    position: absolute;
+    /* for flip */
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+    transform: rotateY(180deg);
+}
+
+.matched {
+    background-color: var(--card-color-match);
+}
+
+/*========== CARD ONE ==========*/
+.bob{
+    /* PLACEMENT ONLY */
+    grid-area: 4/4/6/6;
+    overflow: visible !important;
+    /* for flip */
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    /* for bump up when hover */
+    transition: transform ,0.25s ease-in;
+}
+
+/*========== CARD TWO ==========*/
+.jill {
+    /* PLACEMENT ONLY */
+    grid-area: 4/6/6/8;
+    overflow: visible !important;
+    /* for flip */
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    /* for bump up when hover */
+    transition: transform 0.25s;
+}
+
+
+/*========== CARD THREE ==========*/
+.bill {
+    /* PLACEMENT ONLY */
+    grid-area: 6/4/8/6;
+    overflow: visible !important;
+    /* for flip */
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    /* for bump up when hover */
+    transition: transform ,0.25s ease-in;
+}
+
+/*========== CARD FOUR ==========*/
+.jane{
+    /* PLACEMENT ONLY */
+    grid-area: 6/6/8/8;
+    overflow: visible !important;
+    /* for flip */
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    /* for bump up when hover */
+    transition: transform ,0.25s ease-in;
 }
 
 
@@ -406,12 +273,15 @@ a {
     justify-content: center;
     align-items: center;
     visibility: hidden;
+    display: none;
     opacity: 0;
     transition: visibility 0.3s, opacity 0.3s;
 }
 .bg__active{
     visibility: visible;
     opacity: 1;
+    display: flex;
+    transition: visibility 0.3s, opacity 0.3s;
 }
 .modal {
     position: relative;
