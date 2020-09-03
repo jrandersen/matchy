@@ -83,7 +83,7 @@ const cardDeck = [
 
 // THIS IS FOR GRABBING TEH DOM CARDS, TO LATER INJECT THE CARD ATTRIBUTES
 let matchForDOM = 0;
-const cardDeckLength = cardDeck.length;
+const cardDeckLength = 4;
 let matchedCards = []
 console.log(cardDeckLength);
 
@@ -178,11 +178,13 @@ class Board {
     }
 }
 
-const newBoard = new Board(4); // <== Invoke generate Board hardcoded at 4 for now 
+// const newBoard = new Board(4); // <== Invoke generate Board hardcoded at 4 for now 
 // const random__array = randomiseArray(cardDeck) // <== shuffle the main cardDeck array
-newBoard.generateBoard(cardDeck); // <== generate board (cards randomized and id assined in pairs)
-console.log(newBoard);
-newBoard.dealBoard();
+// newBoard.generateBoard(cardDeck); // <== generate board (cards randomized and id assined in pairs)
+let newBoard = new Board(4);
+newBoard.generateBoard(cardDeck);
+console.log(newBoard)
+newBoard.dealBoard(); 
 
    
 /**
@@ -193,7 +195,7 @@ class Game {
     constructor(){
         this.match =[];
     }
-    gamePLay(arr) {
+    gamePLay(arr){
         while (arr.length === 2) {
             let idOne = arr[1];
             let idTwo = arr[0];
@@ -201,15 +203,16 @@ class Game {
                 console.log(`${idOne}, ${idTwo} it is a match`)
                 this.match.push(arr[0], arr[1])
                 idList = [];  // <== Reset idList to empty keep here!
+                // update 'match' on ui
                 matchForDOM++
                 console.log(matchForDOM);
                 const $match = $('#match')[0]
                 $match.textContent = matchForDOM
                 const temp = this;
                 // timer to hold cards before  game reset
-                window.setTimeout( function(){
+                setTimeout( function(){
                     temp.gameReset(); // <== call game reset 
-                },1000)
+                },800)
             }else if (idOne!==idTwo) {
                 console.log(`${idOne}, ${idTwo} it is NOT a match`);
                 idList = [];
@@ -221,7 +224,7 @@ class Game {
             }else if (idList.length >=3){
                 idList = []
             }else {
-                console,log(`something wrong`)
+                console.log(`something wrong`)
             }
             idOne = -1;
             idTwo = -1;
@@ -233,11 +236,16 @@ class Game {
             console.log('===== Game Reset =====')
             $('div').removeClass('flip')
             matchedCards.push(this.match[0],this.match[1], this.match[2], this.match[3]) // <=- push matched is to global array
+            this.match = [];
             if (matchedCards.length === cardDeckLength) {
-                //re deal
-                matchedCards = [];
-                location.reload();
-                // modal with game info and either play again or end game. 
+                // modal with game info and either play again or end game.
+                setTimeout( function(){
+                    matchedCards = [];
+                    newBoard = new Board(4);
+                    console.log(newBoard)
+                    newBoard.generateBoard(cardDeck);
+                    newBoard.dealBoard();
+                },100) 
             } else if (matchedCards.length > cardDeckLength) {
                 //re deal
                 matchedCards = [];
