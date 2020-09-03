@@ -1,6 +1,47 @@
 /**
- * First game
+ * MATCHY
+// ===== card array-- object or just nested array?
+
+/// ====== card class
+// front to carry image.. future
+// back of card,  image (svg shapes, png shapes)
+// card value - this is what is matched  -- each card will need to be identifiable with only one other card
+// I may need ot mimic my css heer so would need 
+// card__container
+// card__flip ???
+
+//====== board class 
+//needs to have an array cards, two cards per idertifier, 32 total unique pairs cards for 8x8, 8 total for 4x4 and 2 for 2x2
+// needs a function to generate this board array from cards, take input of size of board
+// --[stretch for tomorrow] is to shuffle cards between rounds
+
+//====== game class
+// once the first cards if flipped disable the listner on that card
+// while dom class flip arra = two, then compare
+// if they do not match remove(flip) this will flip them back, this was put on by listener
+// if they do match add aditional class match, and grey out --- this will take additional css through jquery
+// user move on to pick next two cards
+// when all match 9match array == deck array, round is over
+// show modal box, reset page() when they select play again
+// --see below
+
+/// --stretch: board layout
+/// for today board layout with function using jquey to greate all divs, 
+// and anothef function applying all the styling, 
+// then lastly a function to assign the card (which card it is form the deck)
  */
+
+
+
+/***
+ * ============================ MATCHY ===================================
+ */
+
+
+/** ARRAY OF INFO FOR THE CARDS
+*  This is an array made from font awesome shapes availble for free
+*  https://fontawesome.com/icons
+*/
 const cardDeck = [
     {
         shapeName: 'Circle',
@@ -40,55 +81,22 @@ const cardDeck = [
     },
 ]
 
-/// psuedo code
-
-// ===== card array-- object or just nested array?
-
-/// ====== card class
-// front to carry image.. future
-// back of card,  image (svg shapes, png shapes)
-// card value - this is what is matched  -- each card will need to be identifiable with only one other card
-// I may need ot mimic my css heer so would need 
-// card__container
-// card__flip ???
-
-//====== board class 
-//needs to have an array cards, two cards per idertifier, 32 total unique pairs cards for 8x8, 8 total for 4x4 and 2 for 2x2
-// needs a function to generate this board array from cards, take input of size of board
-// --[stretch for tomorrow] is to shuffle cards between rounds
-
-
-//====== game class
-// once the first cards if flipped disable the listner on that card
-// while dom class flip arra = two, then compare
-// if they do not match remove(flip) this will flip them back, this was put on by listener
-// if they do match add aditional class match, and grey out --- this will take additional css through jquery
-// user move on to pick next two cards
-// when all match 9match array == deck array, round is over
-// show modal box, reset page() when they select play again
-// --see below
-
-
-/// --stretch: board layout
-/// for today board layout with function using jquey to greate all divs, 
-// and anothef function applying all the styling, 
-// then lastly a function to assign the card (which card it is form the deck)
-
+// THIS IS FOR GRABBING TEH DOM CARDS, TO LATER INJECT THE CARD ATTRIBUTES
 let matchForDOM = 0;
+const cardDeckLength = cardDeck.length;
+let matchedCards = []
+console.log(cardDeckLength);
 
- /**
-  * GET RANDOM NUMBER HELPER FUNCTION
-  * for now, will build into card or board in future if needed
-  */
+
+/** GET RANDOM NUMBER HELPER FUNCTION
+ * for now, will build into card or board in future if needed
+ */
  const getRandomNumber = function() {
     let num = Math.floor(Math.random() * 10000);
     return num
  }
-//   test it!
-const exampleRandomNum = getRandomNumber();
- 
-/**
-* RANDOMISE THE CARDS HELPER FUNCTION 
+
+/** RANDOMISE THE CARDS HELPER FUNCTION 
 * using the shuffle fisher gates, 
 * @author Mike Bostock https://bost.ocks.org/mike/shuffle/ 
 */
@@ -104,12 +112,11 @@ const randomiseArray = function (array) {
     } 
     return array
 }
-/// test it!!
-const exampleRandomArr = randomiseArray(cardDeck)
+// test it!!
+// const exampleRandomArr = randomiseArray(cardDeck)
  
 
-/**
- *  Matchy Cards
+/** Matchy Cards
  * @param {string} name - This is the name of the Card
  * @param {Object} shape - This is the shape displayed on back of card (svg or png)
  * @param {Object} identity - This a is set to zero and randomised in generateBoard method in Board class  
@@ -121,11 +128,11 @@ class Card {
         this.identity = 0;
     }
 }
-//  test invoke new class!
-const exampleCard = new Card(); // make if you would like ot see what a card class produces
+// test invoke new class!
+// const exampleCard = new Card();
 
-/**
- *  Make the board array of dupliacte Cards
+
+/** Make the board array of dupliacte Cards
  * @param {number} - This is the total number of cards needed, 2x2 grid = 4, 4x4 grid = 16, etc
  * @method generateBoard(array) - This  generates a board from an array. Identity is created randomly assisgned to card, and cards dupplicated.
  * @method dealBoard() - This assignes cards id to a card div in dom    --[stretch]  establises all card element in html and  
@@ -137,34 +144,33 @@ class Board {
         this.cards = [];
     }
     generateBoard(cardArr) {
-        const ranArray = randomiseArray(cardArr);
-        for (let i = 0; i < cardArr.length; i++) {
-            const ran =getRandomNumber()
-            const genCardArr = new Card(cardArr[i].shapeName, cardArr[i].shapeImg, cardArr[i].identity) // generate cards from array
+        const ranArr = randomiseArray(cardArr);
+        cardArr = ranArr
+        for (let i = 0; i < ranArr.length; i++) {
+            const ranNum =getRandomNumber()
+            const genCardArr = new Card(ranArr[i].shapeName, ranArr[i].shapeImg, ranArr[i].identity) // generate cards from array
             // get a random number to create a unique value  
-            genCardArr.identity = ran; 
+            genCardArr.identity = ranNum; 
             this.cards.push(genCardArr);
-            this.cards.push(genCardArr); // <== creates two cards with teh same number
-            // console.log(genCardArr);
+            this.cards.push(genCardArr); // <== creates two cards with the same number
         }
-        // janky but it works for now..., no mattter teh length of array this get how many cards the user wants
-        // console.log(this.cards.length)
+        // janky but it works for now..., no matter the length of array this gets how many cards the user wants
         let newArrlength = this.cards.length - this.number;
         this.cards.splice(0, newArrlength)
-        console.log('==== GAME START ====')
+        const lastShuffle = randomiseArray(this.cards);
+        this.cards = lastShuffle;
     }
     dealBoard() {
-        // --streatch establish html objects for cards
+        // --stretch establish html objects for cards [NOT done]
         const cardFromDOM = document.getElementsByClassName('card');
-        // console.log(cardFromDOM);
         for (let i = 0; i < cardFromDOM.length; i++) {
-            cardFromDOM[i].id = this.cards[i].identity 
+            cardFromDOM[i].id = this.cards[i].identity // <=- this  may be a bug if these two array are not same length, tried nested i for i / j for j - no worky
         }
-        // cardFromDOM[0].children[0].children[1].children[0]
-        // variable.cards__flip.card__back.i.fas fa-star
+        // cardFromDOM[0].children[0].children[1].children[0]  <=- read from dom to ge the below behemeth
         for (let i = 0; i < cardFromDOM.length; i++) {
             cardFromDOM[i].children[0].children[1].children[0].className = this.cards[i].shapeImg;
-        } 
+        }
+        console.log('==== GAME START ====')
     }
     
     styleBoard() {
@@ -173,15 +179,15 @@ class Board {
 }
 
 const newBoard = new Board(4); // <== Invoke generate Board hardcoded at 4 for now 
-const random__array = randomiseArray(cardDeck) // <== shuffle the main cardDeck array
-newBoard.generateBoard(random__array); // <== generate board (cards randomized and id assined in pairs)
+// const random__array = randomiseArray(cardDeck) // <== shuffle the main cardDeck array
+newBoard.generateBoard(cardDeck); // <== generate board (cards randomized and id assined in pairs)
 console.log(newBoard);
 newBoard.dealBoard();
 
    
 /**
  * The Game Play!!
- * @method gamePlay() - This listens for updates to teh classList of '.flip' the looks for match. If not match it removes '.flip'. If match it adds '.matched' and removes '.flip'
+ * @method gamePlay() - This listens for updates to the classList of '.flip' the looks for match. If not match it removes '.flip'. If match it adds '.matched' and removes '.flip'
  */
 class Game {
     constructor(){
@@ -200,7 +206,7 @@ class Game {
                 const $match = $('#match')[0]
                 $match.textContent = matchForDOM
                 const temp = this;
-                /// timer for game reset
+                // timer to hold cards before  game reset
                 window.setTimeout( function(){
                     temp.gameReset(); // <== call game reset 
                 },1000)
@@ -208,7 +214,7 @@ class Game {
                 console.log(`${idOne}, ${idTwo} it is NOT a match`);
                 idList = [];
                 const temp = this;
-                /// timer for no match
+                /// timer to hold cards flipped before flipping back
                 window.setTimeout( function(){
                     $('div').removeClass('flip') 
                 },400)
@@ -226,17 +232,28 @@ class Game {
         if (this.match.length === newBoard.number) {
             console.log('===== Game Reset =====')
             $('div').removeClass('flip')
-            this.match =[]; // <=- there a better way to do this?//
-            // const ranArr = new randomiseArray(cardDeck);
-            // const newBord = generateBoard(ranArr)
-            // newBord.dealBoard();
+            matchedCards.push(this.match[0],this.match[1], this.match[2], this.match[3]) // <=- push matched is to global array
+            if (matchedCards.length === cardDeckLength) {
+                //re deal
+                matchedCards = [];
+                location.reload();
+                // modal with game info and either play again or end game. 
+            } else if (matchedCards.length > cardDeckLength) {
+                //re deal
+                matchedCards = [];
+                location.reload();
+                // modal with game info and either play again or end game. 
+            }else {
+                this.match =[]; // <=- there a better way to do this?//
+                console.log(matchedCards);
+            }
         }else {
             // console.log(`game not reset`)
         } 
     }
 }
-
 const newGame = new Game();
+
 
 
 
@@ -244,6 +261,7 @@ const newGame = new Game();
 /**
  * CARD FLIP LISTNER
  */
+/// THIS PARAM IS FOR PUTTING CLICK SELECTS INTO SO THAT GAMEPLAY() CAN COMPARE
 let idList = []
 const $card = $('.card')
 $card.on('click', function(e){
@@ -313,7 +331,7 @@ function navAction(e) {
             modal__Bg.classList.add('bg__active');  // <== set modal container to 'active'
             modalMsg.textContent = ('This game based off Memory and was made during General Assemlby SEI course in Aug 2020 by Jason Andersen!')
         }else if (selectedItem === ('end')) {
-            location.reload();
+            location.reload()
         }
     }
     e.stopPropagation();
