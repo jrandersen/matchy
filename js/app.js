@@ -269,11 +269,13 @@ class Game {
                 },200) 
             } else if (handMatch.length > dealLength) {
                 // This condition can happen if init card deck is odd number
-                handMatch = [];
-                newBoard = new Board(4);
-                // console.log(newBoard)
-                newBoard.generateBoard(cardDeck);
-                newBoard.dealBoard();
+                setTimeout( function(){
+                    handMatch = [];
+                    newBoard = new Board(4);
+                    // console.log(newBoard)
+                    newBoard.generateBoard(cardDeck);
+                    newBoard.dealBoard();
+                },200) 
                 // modal with game info and either play again or end game. 
             }else {
                 this.match =[]; // <=- there a better way to do this?//
