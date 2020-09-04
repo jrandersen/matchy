@@ -16,6 +16,7 @@
     /* fonts */
     --base-font:  Lato,  sans-serif;
 }
+
 body.light{
     /* colors */
     --background: #fffaf2ff;
