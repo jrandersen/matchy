@@ -224,21 +224,24 @@ class Game {
                 console.log(`${idOne}, ${idTwo} it is a match`)
                 this.match.push(arr[0], arr[1])
                 idList = [];  // <== Reset idList to empty keep here!
-                // update 'match' on ui
+                
+                // UPDATE THE UI
                 totalMatch++
                 const $match = $('#match')[0]
                 $match.textContent = totalMatch
+
+                // SLIGHTLY DELAY THE FLIP TO LET USER SEE
                 const temp = this;
-                // timer to hold cards before  game reset
                 setTimeout( function() {
                     temp.gameReset(); // <== call game reset 
                 },800)
             }
             else if (idOne!==idTwo) {
                 console.log(`${idOne}, ${idTwo} it is NOT a match`);
-                idList = [];
+                idList = []; // <== Reset idList to empty keep here!
+                
+                // SLIGHTLY DELAY THE FLIP TO LET USER SEE
                 const temp = this;
-                /// timer to hold cards flipped before flipping back
                 window.setTimeout( function() {
                     $('div').removeClass('flip') 
                 },400)
@@ -256,32 +259,28 @@ class Game {
         if (this.match.length === newBoard.number) {
             console.log('===== Hand Reset =====')
             $('div').removeClass('flip')
-            handMatch.push(this.match[0],this.match[1], this.match[2], this.match[3]) // <=- push matched is to global array
+            //  push matched is to global array
+            handMatch.push(this.match[0],this.match[1], this.match[2], this.match[3]) 
             this.match = [];
             if (handMatch.length === dealLength) {
-                // modal with game info and either play again or end game.
+                // SLIGHTLY DELAY THE DEAL SO USER DOES NOT SEE CARDS, DELAY ON FLIP
                 setTimeout( function(){
                     handMatch = [];
                     newBoard = new Board(4);
-                    // console.log(newBoard)
                     newBoard.generateBoard(cardDeck);
                     newBoard.dealBoard();
                 },200) 
             } else if (handMatch.length > dealLength) {
-                // This condition can happen if init card deck is odd number
+                // SLIGHTLY DELAY THE DEAL SO USER DOES NOT SEE CARDS, DELAY ON FLIP
                 setTimeout( function(){
                     handMatch = [];
                     newBoard = new Board(4);
-                    // console.log(newBoard)
                     newBoard.generateBoard(cardDeck);
                     newBoard.dealBoard();
                 },200) 
-                // modal with game info and either play again or end game. 
             }else {
                 this.match =[]; // <=- there a better way to do this?//
             }
-        }else {
-            // console.log(`game not reset`)
         } 
     }
     gameEnd() {
@@ -366,7 +365,7 @@ function navAction(e) {
             const modalMsg =document.querySelector('h4');// <== grab h4 for msg
             const modal__Bg = document.querySelector('.modal__bg'); // <== grab modal container
             modal__Bg.classList.add('bg__active');  // <== set modal container to 'active'
-            modalMsg.textContent = (`Welcome... to play Matchy, start by selecting a card to flip over then select another, if they are a match awesome! You've got, move on to the next hand. The game ends when you go through the whole deck. Press [End Game] at any time to stop the timer`)
+            modalMsg.textContent = (`Welcome... to play Matchy, start by selecting a card to flip over then select another, if they are a match awesome! You've got, move on to the next hand. The game ends when you go through the whole deck. Press [Pause Game] at any time to stop the timer, restart by flipping another card`)
             $('modal__btn').textContent = "Let's Play!";
         }else if (selectedItem === ('end')) {
             watch.stop();
