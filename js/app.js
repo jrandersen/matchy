@@ -201,7 +201,9 @@ newBoard.dealBoard();
  
 /**
  * The Game Play!!
- * @method gamePlay() - This listens for updates to the classList of '.flip' the looks for match. If not match it removes '.flip'. If match it adds '.matched' and removes '.flip'
+ * @method gamePlay() - This takes in idList when a card is 'clicked', then while that list === 2, it runs through conditions to evalute matching
+ * @method gameReset() - This is to re-deal & shuffle the board so users have new cards and placement.
+ * @method gameEnd() - This evaaluates totalMatch array === cardDeckLength and when equal or greater (if ny chamce teh deck is an odd number) it fires off teh game end sequence giving user fonal time and matchs, with option to start again.  
  */
 class Game {
     constructor(){
@@ -231,7 +233,8 @@ class Game {
                 setTimeout( function() {
                     temp.gameReset(); // <== call game reset 
                 },800)
-            }else if (idOne!==idTwo) {
+            }
+            else if (idOne!==idTwo) {
                 console.log(`${idOne}, ${idTwo} it is NOT a match`);
                 idList = [];
                 const temp = this;
@@ -279,13 +282,13 @@ class Game {
             // console.log(`game not reset`)
         } 
     }
-   
     gameEnd() {
         console.log(`======== Game Over 1 =========`)
+        watch.stop(); // <== not working...
         // const stop = document.getElementById('end'); 
         // stop.click(); //<== i know janky, could not get watch.stop() to fire here??
-        const $btnStop = $('#end')
-        $btnStop.click();
+        // const $btnStop = $('#end') // <== not working either, scope?
+        // $btnStop.click();
         let finalTime = document.getElementById('timer').textContent;
         let finalMatch = document.getElementById('match').textContent;
         let finalAvg = (parseFloat(finalTime)/parseInt(finalMatch));
@@ -309,7 +312,6 @@ $card.on('click', function(e){
     watch.start();
 }); 
 
-
 //  CONTAINER LISTNER DELEGATION
 const containerListner = document.querySelector('.container');
 containerListner.addEventListener('click', containerAction, false);
@@ -322,7 +324,6 @@ function containerAction(e) {
     }
     e.stopPropagation();
 }
-
 
 /**
  *  MODAL WINDOW  AND NAV LISTNERS
@@ -338,7 +339,6 @@ modal__close.addEventListener('click', function (e) {
 //  MODAL LISTNER DELEGATION
 const modalListner = document.querySelector('.modal__bg');
 modalListner.addEventListener('click', modalAction, false);
-
 function modalAction(e) {
     if (e.target !== e.currentTarget) {
         const clickedItem = e.target.id;
@@ -356,7 +356,6 @@ function modalAction(e) {
 //  'NAV' LISTNER DELEGATION
 const navListner = document.querySelector('.container');
 navListner.addEventListener('click', navAction, false);
-
 function navAction(e) {
     if (e.target !== e.currentTarget) {
         const selectedItem = e.target.id;
