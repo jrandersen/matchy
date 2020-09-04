@@ -263,6 +263,7 @@ class Game {
             // console.log(`game not reset`)
         } 
     }
+   
     gameEnd() {
         console.log(`======== Game Over 1 =========`)
         // const stop = document.getElementById('end'); 
