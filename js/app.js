@@ -60,6 +60,10 @@ const cardDeck = [
         shapeImg: "fas fa-minus-circle",
     },
     {
+        shapeName: 'Plus-circle',
+        shapeImg: "fas fa-plus-circle"
+    },
+    {
         shapeName: 'Star',
         shapeImg: "fas fa-star",
     },
@@ -76,8 +80,16 @@ const cardDeck = [
         shapeImg: "fas fa-plus-square",
     },
     {
+        shapeName: "Minus-square",
+        shapeImg: "fas fa-minus-square"
+    },
+    {
         shapeName: 'Cloud',
         shapeImg: "fas fa-cloud",
+    },
+    {
+        shapeName: 'Plus',
+        shapeImg: "fas fa-plus"
     },
 ]
 // THIS IS FOR GRABBING TEH DOM CARDS, TO LATER INJECT THE CARD ATTRIBUTES
@@ -196,9 +208,13 @@ class Game {
         this.match =[];
     }
     gamePLay(arr){
-        if (totalMatch >= cardDeckLength) {
+        // look for total match equaling deck length, use has gone through and end game
+        if (totalMatch === cardDeckLength) {
             this.gameEnd();
-         }
+        }else if (totalMatch > cardDeckLength) {
+            this.gameEnd();
+        }
+        // matching while loop
         while (arr.length === 2) {
             let idOne = arr[1];
             let idTwo = arr[0];
@@ -275,7 +291,7 @@ class Game {
         let finalAvg = (parseFloat(finalTime)/parseInt(finalMatch));
         const modalMsg =document.querySelector('h4');// <== grab h4 for msg
         modal__Bg.classList.add('bg__active');  // <== set modal container to 'active'
-        modalMsg.textContent = (`Great game you had, ${finalMatch} matches in ${finalTime}!`) 
+        modalMsg.textContent = (`Great game you had, ${finalMatch} matches in, ${finalTime}!`) 
     }
 }   
 const newGame = new Game();
@@ -349,10 +365,12 @@ function navAction(e) {
             const modalMsg =document.querySelector('h4');// <== grab h4 for msg
             const modal__Bg = document.querySelector('.modal__bg'); // <== grab modal container
             modal__Bg.classList.add('bg__active');  // <== set modal container to 'active'
-            modalMsg.textContent = (`Welcome... to play Matchy, start by selecting a card, if it is a match awesome, then select another, I'm sure you'll find it's match. The game ends when you go through the whole deck. Press end game at any time to stop the timer`)
+            modalMsg.textContent = (`Welcome... to play Matchy, start by selecting a card to flip over then select another, if they are a match awesome! You've got, move on to the next hand. The game ends when you go through the whole deck. Press [End Game] at any time to stop the timer`)
             $('modal__btn').textContent = "Let's Play!";
         }else if (selectedItem === ('end')) {
-            watch.stop()
+            watch.stop();
+        }else if (selectedItem === ('start')) {
+            location.reload();
         }
     }
     e.stopPropagation();
