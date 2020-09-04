@@ -80,7 +80,6 @@ const cardDeck = [
         shapeImg: "fas fa-cloud",
     },
 ]
-
 // THIS IS FOR GRABBING TEH DOM CARDS, TO LATER INJECT THE CARD ATTRIBUTES
 let totalMatch = 0;
 const cardDeckLength = cardDeck.length;

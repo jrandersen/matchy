@@ -2,7 +2,6 @@
  * Based in on 'Creating a StopWatch in JS' by Saad Quadri https://github.com/saadq
  * video here: https://www.youtube.com/watch?v=jRhB1IG7uAw&t=758s  
  */
-
 class Stopwatch {
     constructor(elem) {
         let time = 0;
