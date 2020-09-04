@@ -8,14 +8,17 @@
         <!-- @misc Normalize.css, title = normalise.css, howPublished = https://github.com/necolas/normalize.css/, datePublished = Nov 4 2018 -->
     <link rel="stylesheet" href="css/node_modules/normalize.css/normalize.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">
+
     <script src="js/app.js" defer></script>
+    <script src="js/stopwatch.js"></script>
     <link rel="stylesheet" href="css/main.css">
     <title>Matchy McMatchface</title>
 </head>
 <body class= 'light' id='light'>
     <div class='container' id='container'>
-        <button class='end' id='end'>End Game</button>
-        <button class='info' id='info'>Info</button>
+        <button class='nav__btn' id='end'>End Game</button>
+        <button class='nav__btn' id='info'>Info</button>
         
         <div class='card bob' id='0001'>
             <div class=flip>
@@ -42,7 +45,7 @@
             </div>
         </div>
         <nav id='side__nav'>
-            <div id='score'>Score:
+            <div id='score'>Score
                 <ul>
                     <li>12:00</li>
                     <li>12:45</li>
@@ -65,8 +68,7 @@
             <div></div>
             <div class='modal__close'>X</div>
             <div class='both__btn'>
-                <button class='modal__btn' id='modal__end'>End Game</button>
-                <button class='modal__btn' id='modal__start'>Play Again</button>
+                <button class='modal__btn' id='modal__start'>Play!</button>
             </div>
         </div>
     </div>
