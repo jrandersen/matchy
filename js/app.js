@@ -60,6 +60,10 @@ const cardDeck = [
         shapeImg: "fas fa-minus-circle",
     },
     {
+        shapeName: 'Plus-circle',
+        shapeImg: "fas fa-plus-circle"
+    },
+    {
         shapeName: 'Star',
         shapeImg: "fas fa-star",
     },
@@ -76,8 +80,16 @@ const cardDeck = [
         shapeImg: "fas fa-plus-square",
     },
     {
+        shapeName: "Minus-square",
+        shapeImg: "fas fa-minus-square"
+    },
+    {
         shapeName: 'Cloud',
         shapeImg: "fas fa-cloud",
+    },
+    {
+        shapeName: 'Plus',
+        shapeImg: "fas fa-plus"
     },
 ]
 // THIS IS FOR GRABBING TEH DOM CARDS, TO LATER INJECT THE CARD ATTRIBUTES
@@ -189,16 +201,22 @@ newBoard.dealBoard();
  
 /**
  * The Game Play!!
- * @method gamePlay() - This listens for updates to the classList of '.flip' the looks for match. If not match it removes '.flip'. If match it adds '.matched' and removes '.flip'
+ * @method gamePlay() - This takes in idList when a card is 'clicked', then while that list === 2, it runs through conditions to evalute matching
+ * @method gameReset() - This is to re-deal & shuffle the board so users have new cards and placement.
+ * @method gameEnd() - This evaaluates totalMatch array === cardDeckLength and when equal or greater (if ny chamce teh deck is an odd number) it fires off teh game end sequence giving user fonal time and matchs, with option to start again.  
  */
 class Game {
     constructor(){
         this.match =[];
     }
     gamePLay(arr){
-        if (totalMatch >= cardDeckLength) {
+        // look for total match equaling deck length, use has gone through and end game
+        if (totalMatch === cardDeckLength) {
             this.gameEnd();
-         }
+        }else if (totalMatch > cardDeckLength) {
+            this.gameEnd();
+        }
+        // matching while loop
         while (arr.length === 2) {
             let idOne = arr[1];
             let idTwo = arr[0];
@@ -206,20 +224,24 @@ class Game {
                 console.log(`${idOne}, ${idTwo} it is a match`)
                 this.match.push(arr[0], arr[1])
                 idList = [];  // <== Reset idList to empty keep here!
-                // update 'match' on ui
+                
+                // UPDATE THE UI
                 totalMatch++
                 const $match = $('#match')[0]
                 $match.textContent = totalMatch
+
+                // SLIGHTLY DELAY THE FLIP TO LET USER SEE
                 const temp = this;
-                // timer to hold cards before  game reset
                 setTimeout( function() {
                     temp.gameReset(); // <== call game reset 
                 },800)
-            }else if (idOne!==idTwo) {
+            }
+            else if (idOne!==idTwo) {
                 console.log(`${idOne}, ${idTwo} it is NOT a match`);
-                idList = [];
+                idList = []; // <== Reset idList to empty keep here!
+                
+                // SLIGHTLY DELAY THE FLIP TO LET USER SEE
                 const temp = this;
-                /// timer to hold cards flipped before flipping back
                 window.setTimeout( function() {
                     $('div').removeClass('flip') 
                 },400)
@@ -237,45 +259,50 @@ class Game {
         if (this.match.length === newBoard.number) {
             console.log('===== Hand Reset =====')
             $('div').removeClass('flip')
-            handMatch.push(this.match[0],this.match[1], this.match[2], this.match[3]) // <=- push matched is to global array
+            //  push matched is to global array
+            handMatch.push(this.match[0],this.match[1], this.match[2], this.match[3]) 
             this.match = [];
             if (handMatch.length === dealLength) {
-                // modal with game info and either play again or end game.
+                // SLIGHTLY DELAY THE DEAL SO USER DOES NOT SEE CARDS, DELAY ON FLIP
                 setTimeout( function(){
                     handMatch = [];
                     newBoard = new Board(4);
-                    // console.log(newBoard)
                     newBoard.generateBoard(cardDeck);
                     newBoard.dealBoard();
                 },200) 
             } else if (handMatch.length > dealLength) {
-                // This condition can happen if init card deck is odd number
-                handMatch = [];
-                newBoard = new Board(4);
-                // console.log(newBoard)
-                newBoard.generateBoard(cardDeck);
-                newBoard.dealBoard();
-                // modal with game info and either play again or end game. 
+                // SLIGHTLY DELAY THE DEAL SO USER DOES NOT SEE CARDS, DELAY ON FLIP
+                setTimeout( function(){
+                    handMatch = [];
+                    newBoard = new Board(4);
+                    newBoard.generateBoard(cardDeck);
+                    newBoard.dealBoard();
+                },200) 
             }else {
                 this.match =[]; // <=- there a better way to do this?//
             }
-        }else {
-            // console.log(`game not reset`)
         } 
     }
     gameEnd() {
         console.log(`======== Game Over 1 =========`)
+<<<<<<< HEAD
         watch.stop(); // <== this does not work for some reason??
         // const stop = document.getElementById('end'); 
         // stop.click(); //<== i know janky, could not get watch.stop() to fire here??
         // const $btnStop = $('#end') // <== this did not work either
+=======
+        watch.stop(); // <== not working...
+        // const stop = document.getElementById('end'); 
+        // stop.click(); //<== i know janky, could not get watch.stop() to fire here??
+        // const $btnStop = $('#end') // <== not working either, scope?
+>>>>>>> master
         // $btnStop.click();
         let finalTime = document.getElementById('timer').textContent;
         let finalMatch = document.getElementById('match').textContent;
         let finalAvg = (parseFloat(finalTime)/parseInt(finalMatch));
         const modalMsg =document.querySelector('h4');// <== grab h4 for msg
         modal__Bg.classList.add('bg__active');  // <== set modal container to 'active'
-        modalMsg.textContent = (`Great game you had, ${finalMatch} matches in ${finalTime}!`) 
+        modalMsg.textContent = (`Great game you had, ${finalMatch} matches in, ${finalTime}!`) 
     }
 }   
 const newGame = new Game();
@@ -293,7 +320,6 @@ $card.on('click', function(e){
     watch.start();
 }); 
 
-
 //  CONTAINER LISTNER DELEGATION
 const containerListner = document.querySelector('.container');
 containerListner.addEventListener('click', containerAction, false);
@@ -306,7 +332,6 @@ function containerAction(e) {
     }
     e.stopPropagation();
 }
-
 
 /**
  *  MODAL WINDOW  AND NAV LISTNERS
@@ -322,7 +347,6 @@ modal__close.addEventListener('click', function (e) {
 //  MODAL LISTNER DELEGATION
 const modalListner = document.querySelector('.modal__bg');
 modalListner.addEventListener('click', modalAction, false);
-
 function modalAction(e) {
     if (e.target !== e.currentTarget) {
         const clickedItem = e.target.id;
@@ -340,7 +364,6 @@ function modalAction(e) {
 //  'NAV' LISTNER DELEGATION
 const navListner = document.querySelector('.container');
 navListner.addEventListener('click', navAction, false);
-
 function navAction(e) {
     if (e.target !== e.currentTarget) {
         const selectedItem = e.target.id;
@@ -349,10 +372,12 @@ function navAction(e) {
             const modalMsg =document.querySelector('h4');// <== grab h4 for msg
             const modal__Bg = document.querySelector('.modal__bg'); // <== grab modal container
             modal__Bg.classList.add('bg__active');  // <== set modal container to 'active'
-            modalMsg.textContent = (`Welcome... to play Matchy, start by selecting a card, if it is a match awesome, then select another, I'm sure you'll find it's match. The game ends when you go through the whole deck. Press end game at any time to stop the timer`)
+            modalMsg.textContent = (`Welcome... to play Matchy, start by selecting a card to flip over then select another, if they are a match awesome! You've got, move on to the next hand. The game ends when you go through the whole deck. Press [Pause Game] at any time to stop the timer, restart by flipping another card`)
             $('modal__btn').textContent = "Let's Play!";
         }else if (selectedItem === ('end')) {
-            watch.stop()
+            watch.stop();
+        }else if (selectedItem === ('start')) {
+            location.reload();
         }
     }
     e.stopPropagation();
