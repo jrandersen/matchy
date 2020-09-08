@@ -285,17 +285,11 @@ class Game {
     }
     gameEnd() {
         console.log(`======== Game Over 1 =========`)
-<<<<<<< HEAD
-        watch.stop(); // <== this does not work for some reason??
-        // const stop = document.getElementById('end'); 
-        // stop.click(); //<== i know janky, could not get watch.stop() to fire here??
-        // const $btnStop = $('#end') // <== this did not work either
-=======
+
         watch.stop(); // <== not working...
         // const stop = document.getElementById('end'); 
         // stop.click(); //<== i know janky, could not get watch.stop() to fire here??
         // const $btnStop = $('#end') // <== not working either, scope?
->>>>>>> master
         // $btnStop.click();
         let finalTime = document.getElementById('timer').textContent;
         let finalMatch = document.getElementById('match').textContent;
