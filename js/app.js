@@ -286,10 +286,6 @@ class Game {
     gameEnd() {
         console.log(`======== Game Over 1 =========`)
         watch.stop(); // <== not working...
-        // const stop = document.getElementById('end'); 
-        // stop.click(); //<== i know janky, could not get watch.stop() to fire here??
-        // const $btnStop = $('#end') // <== not working either, scope?
-        // $btnStop.click();
         let finalTime = document.getElementById('timer').textContent;
         let finalMatch = document.getElementById('match').textContent;
         let finalAvg = (parseFloat(finalTime)/parseInt(finalMatch));
