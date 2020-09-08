@@ -300,7 +300,6 @@ class Game {
     }
 }   
 const newGame = new Game();
-
 /**
  * CARD FLIP LISTNER
  */
